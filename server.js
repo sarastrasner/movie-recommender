@@ -11,18 +11,27 @@ const pg = require('pg');
 const methodOverride = require('method-override');
 
 
+// Global variables
+
 const app = express();
 let PORT = process.env.PORT;
 const client = new pg.Client(process.env.DATABASE_URL);
+let movieResultsArray = [];
+
+
 
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 app.use(express.urlencoded({extended : true}));
 app.use(methodOverride('_method'));
 
+
+
 // routes
 
-app.get('/', getMovieData);
+app.get('/', renderHomePage);
+app.get('/random', generateRandomMovie);
+app.get('/test', searchByKeyword); // route for testing functions using console.log
 
 
 
@@ -38,50 +47,68 @@ function rng(max) {
 }
 
 
-// This function makes an API call for "halloween" movies and passes them through a constructor to streamline the data. Currently used for random movie selection
-function getMovieData(request, response) {
-  let url = `https://api.themoviedb.org/3/discover/movie`
-  let queryObject = {
-    api_key: process.env.TMDBAPIKEY,
-    language: 'en-US',
-    sort_by: 'popularity.desc',
-    include_adult: false,
-    include_video: false,
-    page: 1,
-    // currently pulls in the first page of 12 pages of results... which renders 20 movies... do we want more than one pull? returns with "halloween" up to 228 results
-    with_keywords: 3335 // this is the number for halloween, christmas would have a different keyword id
+// This function makes an API call for "halloween" movies and passes them through a constructor to streamline the data. The constructed objects are stored globally in an array. This is our first main pull required for generating a random movie selection. We may want to add to this if we need more data on these movies like keywords.
+function getMovieData() {
+  let url = `https://api.themoviedb.org/3/discover/movie`;
+
+  for (let i = 1; i <= 5; i++) {
+    let queryObject = {
+      api_key: process.env.TMDBAPIKEY,
+      language: 'en-US',
+      sort_by: 'popularity.desc',
+      include_adult: false,
+      include_video: false,
+      page: i,
+      // the for loop generates pages 1-5, 100 entries
+      with_keywords: 3335 // this is the number for halloween, christmas would have a different keyword id
+    }
+    superagent.get(url).query(queryObject)
+      .then(data => {
+        let constructedMovies = data.body.results.map(movie => new MovieObj(movie));
+        constructedMovies.forEach(movie => movieResultsArray.push(movie));
+      })
+      .catch(error => console.log(error));
   }
-
-  superagent.get(url).query(queryObject)
-    .then(data => {
-      // the way we are storing this "results movie array" is currently only scoped to this specific call... we need to think about how frequently we want to call the api and get the data. Is is everytime we chose "get a random recommendation" or do we call one time when the person visits the page, store the data globally, and then just run an rng on the array to render the result? Might be better to set up a single pull when you come to the page and store the results to a database, then pull from the database depending on random ID number or key words. If we did this our initial API call function would probably need to be a bit more intense, making several queries to obtain all of the information we need. Currently only getting the following with this call:
-      //{
-      //   popularity: 12.716,
-      //   id: 323262,
-      //   video: false,
-      //   vote_count: 319,
-      //   vote_average: 5,
-      //   title: 'Holidays',
-      //   release_date: '2016-04-22',
-      //   original_language: 'en',
-      //   original_title: 'Holidays',
-      //   genre_ids: [ 35, 27 ],
-      //   backdrop_path: '/j0WqwIfrrzDgvnEBXbzM41ulpWY.jpg',
-      //   adult: false,
-      //   overview: 'An anthology feature film that puts a uniquely dark and original spin on some of the most iconic and beloved holidays of all time by challenging our folklore, traditions and assumptions.',
-      //   poster_path: '/qndlHSuAaGwBKpWAUt6gX3RRuzb.jpg'
-      // }
-
-      // we would also need all of the other properties in our schema
-      // I am not sure if it is better to store the api return in an array or in the database... Might be better to store in an array until the user wants to add the movie to recommendations so we don't have to use a logic statement to determine if we need to drop and rebuild the data.
-
-      let resultsMovieArray = data.body.results.map(movie => new MovieObj(movie));
-      let randomMovie = resultsMovieArray[rng(20)]; //currently recieving 20 results, would have to change the parameter passed to rng() if we enlarged the size of our api results
-      response.status(200).render('pages/searches/showRandom', {randomMovieSelection: randomMovie});
-    })
-    .catch(error => console.log(error));
 }
 
+//renders home page
+function renderHomePage(request, response) {
+  getMovieData();// is this the best way to do this... there is a very slight delay? Shopuld it happen globally? Then it doesn't double the array when someone returns to the homepage
+  response.status(200).render('pages/index');
+}
+
+// generates a random movie from the array constructed in getMovieData
+function generateRandomMovie(request, response) {
+  let randomMovie = movieResultsArray[rng(100)];
+  response.status(200).render('pages/searches/showRandom', {randomMovieSelection: randomMovie})
+}
+
+// this function makes a call by movie_id number, it also can return additional things like "keyword" or "cast"... we might want to use this url route to get a more complete return of movie details for our constructor or database
+function gatherAdditionalData() {
+  let url = `https://api.themoviedb.org/3/movie/157336`;
+  let queryObject = {
+    api_key: process.env.TMDBAPIKEY,
+    append_to_response: 'keywords, cast'
+  }
+  superagent.get(url).query(queryObject)
+    .then(data => console.log('these are the keywords for movie 157336' + data.body.keywords)
+    )
+    .catch(error => console.log(error));
+
+}
+
+// this will search for keyword id's by name and return ID numbers, we have to use the id numbers to search the api by keyword... need to determine how we are going to do this. Will we add key words to our original movie array or will we do new queries by keyword for each movie?
+function searchForKeywordID() {
+  let url = `https://api.themoviedb.org/3/search/keyword`;
+  let queryObject = {
+    api_key: process.env.TMDBAPIKEY,
+    query: 'family'
+  };
+  superagent.get(url).query(queryObject)
+    .then(data => console.log('these are the id numbers that match the keyword search' + data.body.results)
+    )
+    .catch(error => console.log(error));
+}
 
 
 
@@ -89,11 +116,20 @@ function getMovieData(request, response) {
 // constructors
 
 function MovieObj(movie) {
+  this.movie_id = movie.id;
   this.title = movie.title;
   this.description = movie.overview;
   this.image_url = `https://image.tmdb.org/t/p/w500${movie.poster_path}`; // the beginning part is refering to the hosting site, and the size (w500)
 }
 
+// don't know if we ultimately want two constructors. We will want to talk about the purpose of each of these
+function recommendedMovieObj(movie) {
+  this.movie_id = movie.id;
+  this.image_url = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+  this.title = movie.title;
+  this.description = movie.overview;
+  this.runtime = movie.runtime;
+}
 
 
 
