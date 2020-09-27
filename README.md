@@ -16,5 +16,9 @@ actual total time 25min
 prework feature: create ejs framework and header/footer partials
 estimated time to complete 1 hr
 start time 8:00pm
+end time 8:23pm
+actual total time 23 min
+
+845
 
 Sunday September 27th
