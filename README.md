@@ -19,6 +19,12 @@ start time 8:00pm
 end time 8:23pm
 actual total time 23 min
 
-845
+feature 1 - random christmas movie generator
+eatimated time to complete 2 hours
+start time 8:30pm 
+end time 9:00pm
+start time 11:00pm
+end time 12:00am
+actual total time 1 hr 30 min
 
 Sunday September 27th
