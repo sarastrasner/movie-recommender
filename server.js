@@ -31,7 +31,7 @@ app.use(methodOverride('_method'));
 
 app.get('/', renderHomePage);
 app.get('/random', generateRandomMovie);
-app.get('/test', searchByKeyword); // route for testing functions using console.log
+app.get('/test', searchForKeywordID); // route for testing functions using console.log
 
 
 
@@ -91,7 +91,7 @@ function gatherAdditionalData() {
     append_to_response: 'keywords, cast'
   }
   superagent.get(url).query(queryObject)
-    .then(data => console.log('these are the keywords for movie 157336' + data.body.keywords)
+    .then(data => console.log('these are the keywords for movie ' + data.body.keywords)
     )
     .catch(error => console.log(error));
 
@@ -99,13 +99,14 @@ function gatherAdditionalData() {
 
 // this will search for keyword id's by name and return ID numbers, we have to use the id numbers to search the api by keyword... need to determine how we are going to do this. Will we add key words to our original movie array or will we do new queries by keyword for each movie?
 function searchForKeywordID() {
+  console.log('in the function');
   let url = `https://api.themoviedb.org/3/search/keyword`;
   let queryObject = {
     api_key: process.env.TMDBAPIKEY,
     query: 'family'
   };
   superagent.get(url).query(queryObject)
-    .then(data => console.log('these are the id numbers that match the keyword search' + data.body.results)
+    .then(data => console.log('these are the id numbers that match the keyword search' + data.body.results[0].id + data.body.results[0].name)
     )
     .catch(error => console.log(error));
 }
