@@ -91,6 +91,8 @@ Acceptance Tests:
 - Add character limit to all reviews. 
 
 # Domain Modeling
-
+![Domain Model](public/img/domain-model.jpeg)
 
 # Entity Relationship Diagram
+![EntityRelationshipDiagram](public/img/wireframe1.png)
+![EntityRelationshipDiagram 2](public/img/wireframe2.png)
