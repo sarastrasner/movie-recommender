@@ -1,0 +1,28 @@
+{
+  "name": "movie-recommender",
+  "version": "1.0.0",
+  "description": "Holiday movie recommendation app for codefellows 301 project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarabeth-russert/movie-recommender.git"
+  },
+  "author": "Sara R, Sara S, James S",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sarabeth-russert/movie-recommender/issues"
+  },
+  "homepage": "https://github.com/sarabeth-russert/movie-recommender#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "method-override": "^3.0.0",
+    "pg": "^8.3.3",
+    "superagent": "^6.1.0"
+  }
+}

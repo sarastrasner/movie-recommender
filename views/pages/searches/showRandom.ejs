@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') -%>
+  </head>
+  <body>
+    <header>Your Random Movie</header>
+    <main>
+      <ul>
+        <img src="<%= randomMovieSelection.image_url %>" >
+        <h2><%= randomMovieSelection.title %></h2>
+        <p><%= randomMovieSelection.description %></p>
+      </ul>
+    </main>
+    <footer>
+      <%- include('../partials/footer') -%>
+    </footer>
+  </body>
+</html>
