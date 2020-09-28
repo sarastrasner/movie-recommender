@@ -16,22 +16,58 @@ const methodOverride = require('method-override');
 const app = express();
 let PORT = process.env.PORT;
 const client = new pg.Client(process.env.DATABASE_URL);
-let movieResultsArray = [];
-
-
 
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 app.use(express.urlencoded({extended : true}));
 app.use(methodOverride('_method'));
 
+let summerKeywords = [];
+let springKeywords = [];
+let winterKeywords = [];
+let fallKeywords = [];
+
+// keyword object generation
+
+let romance = new Keyword('romance', 9840); summerKeywords.push(romance); winterKeywords.push(romance);
+let comedy = new Keyword('comedy', 270290); springKeywords.push(comedy); summerKeywords.push(comedy); winterKeywords.push(comedy); fallKeywords.push(comedy);
+let classic = new Keyword('classic', 11020); springKeywords.push(classic); summerKeywords.push(classic); winterKeywords.push(classic); fallKeywords.push(classic);
+let valentinesDay = new Keyword('valentine\'s day', 160404); springKeywords.push(valentinesDay);
+let wedding = new Keyword('wedding', 13027); springKeywords.push(wedding);
+let familyFriendly = new Keyword('family-friendly', 267868); springKeywords.push(familyFriendly); summerKeywords.push(familyFriendly); winterKeywords.push(familyFriendly); fallKeywords.push(familyFriendly);
+let kids = new Keyword('kids', 161155); springKeywords.push(kids); summerKeywords.push(kids); winterKeywords.push(kids); fallKeywords.push(kids);
+let animated = new Keyword('animated', 268169); springKeywords.push(animated); summerKeywords.push(animated); winterKeywords.push(animated); fallKeywords.push(animated);
+let vacation = new Keyword('vacation', 6876); springKeywords.push(vacation); summerKeywords.push(vacation);
+let dogs = new Keyword('dogs', 262810); springKeywords.push(dogs); summerKeywords.push(dogs); winterKeywords.push(dogs); fallKeywords.push(dogs);
+let cats = new Keyword('cats', 238502); springKeywords.push(cats); summerKeywords.push(cats); winterKeywords.push(cats); fallKeywords.push(cats);
+let matchmaker = new Keyword('matchmaker', 248025); springKeywords.push(matchmaker);
+let bride = new Keyword('bride', 3582); springKeywords.push(bride);
+let horror = new Keyword('horror', 8087); springKeywords.push(horror); summerKeywords.push(horror); winterKeywords.push(horror); fallKeywords.push(horror);
+let beach = new Keyword('beach', 966); summerKeywords.push(beach);
+let highSchool = new Keyword('high school', 6270); summerKeywords.push(highSchool);
+let ocean = new Keyword('ocean', 270); summerKeywords.push(ocean);
+let fireworks = new Keyword('fireworks', 2407); summerKeywords.push(fireworks);
+let camp = new Keyword('camp', 11663); summerKeywords.push(camp);
+let comingOfAge = new Keyword('coming of age', 10683); summerKeywords.push(comingOfAge);
+let baseball = new Keyword('baseball', 1480); summerKeywords.push(baseball);
+let sports = new Keyword('sports', 6075); summerKeywords.push(sports);
+let party = new Keyword('party', 8508); summerKeywords.push(party);
+let rudolph = new Keyword('rudolph', 250057); winterKeywords.push(rudolph);
+let stopMotion = new Keyword('stop motion', 10121); winterKeywords.push(stopMotion);
+let musical = new Keyword('musical', 4344); summerKeywords.push(musical); winterKeywords.push(musical);
+let travel = new Keyword('travel', 9935); winterKeywords.push(travel);
+let nutcracker = new Keyword('nutcracker', 221288); winterKeywords.push(nutcracker);
+let suspense = new Keyword('suspense', 270049); springKeywords.push(suspense); summerKeywords.push(suspense); winterKeywords.push(suspense); fallKeywords.push(suspense);
+let witches = new Keyword('witches', 262167); fallKeywords.push(witches);
+let ghosts = new Keyword('ghosts', 256394); fallKeywords.push(ghosts);
+let scary = new Keyword('scary', 268170); fallKeywords.push(scary);
 
 
 // routes
 
 app.get('/', renderHomePage);
 app.get('/random', generateRandomMovie);
-app.get('/test', searchForKeywordID); // route for testing functions using console.log
+app.get('/test', gatherAdditionalData); // route for testing functions using console.log
 
 
 
@@ -47,51 +83,44 @@ function rng(max) {
 }
 
 
-// This function makes an API call for "halloween" movies and passes them through a constructor to streamline the data. The constructed objects are stored globally in an array. This is our first main pull required for generating a random movie selection. We may want to add to this if we need more data on these movies like keywords.
-function getMovieData() {
+// This function makes an API call for "halloween" movies and passes them through a constructor to streamline the data. The constructed objects are stored globally in an array. This is our first main pull required for generating a random movie selection. We may want to add to this if we need more data on these movies like keywords. Returns a randomly generated movie based on the array to 'searches/showRandom'
+function generateRandomMovie(request, response) {
   let url = `https://api.themoviedb.org/3/discover/movie`;
 
-  for (let i = 1; i <= 5; i++) {
-    let queryObject = {
-      api_key: process.env.TMDBAPIKEY,
-      language: 'en-US',
-      sort_by: 'popularity.desc',
-      include_adult: false,
-      include_video: false,
-      page: i,
-      // the for loop generates pages 1-5, 100 entries
-      with_keywords: 3335 // this is the number for halloween, christmas would have a different keyword id
-    }
-    superagent.get(url).query(queryObject)
-      .then(data => {
-        let constructedMovies = data.body.results.map(movie => new MovieObj(movie));
-        constructedMovies.forEach(movie => movieResultsArray.push(movie));
-      })
-      .catch(error => console.log(error));
+  let queryObject = {
+    api_key: process.env.TMDBAPIKEY,
+    language: 'en-US',
+    sort_by: 'popularity.desc',
+    include_adult: false,
+    include_video: false,
+    page: rng(5),
+    with_keywords: 3335 // this is the number for halloween, christmas would have a different keyword id
   }
+  superagent.get(url).query(queryObject)
+    .then(data => {
+      let constructedMovie = data.body.results.map(movie => new MovieObj(movie));
+      let randomMovie = constructedMovie[rng(20)];
+      response.status(200).render('pages/searches/showRandom', {randomMovieSelection: randomMovie})
+    })
+    .catch(error => console.log(error));
+
 }
 
 //renders home page
 function renderHomePage(request, response) {
-  getMovieData();// is this the best way to do this... there is a very slight delay? Shopuld it happen globally? Then it doesn't double the array when someone returns to the homepage
   response.status(200).render('pages/index');
 }
 
-// generates a random movie from the array constructed in getMovieData
-function generateRandomMovie(request, response) {
-  let randomMovie = movieResultsArray[rng(100)];
-  response.status(200).render('pages/searches/showRandom', {randomMovieSelection: randomMovie})
-}
 
 // this function makes a call by movie_id number, it also can return additional things like "keyword" or "cast"... we might want to use this url route to get a more complete return of movie details for our constructor or database
 function gatherAdditionalData() {
-  let url = `https://api.themoviedb.org/3/movie/157336`;
+  let url = `https://api.themoviedb.org/3/movie/4232`;
   let queryObject = {
     api_key: process.env.TMDBAPIKEY,
-    append_to_response: 'keywords, cast'
+    append_to_response: 'keywords'
   }
   superagent.get(url).query(queryObject)
-    .then(data => console.log('these are the keywords for movie ' + data.body.keywords)
+    .then(data => console.log('these are the keywords for movie ' + data.body.results )
     )
     .catch(error => console.log(error));
 
@@ -112,8 +141,6 @@ function searchForKeywordID() {
 }
 
 
-
-
 // constructors
 
 function MovieObj(movie) {
@@ -124,14 +151,31 @@ function MovieObj(movie) {
 }
 
 // don't know if we ultimately want two constructors. We will want to talk about the purpose of each of these
-function recommendedMovieObj(movie) {
-  this.movie_id = movie.id;
-  this.image_url = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-  this.title = movie.title;
-  this.description = movie.overview;
-  this.runtime = movie.runtime;
+// function recommendedMovieObj(movie) {
+//   this.movie_id = movie.id;
+//   this.image_url = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+//   this.title = movie.title;
+//   this.description = movie.overview;
+//   this.runtime = movie.runtime;
+// }
+
+function Keyword(name, id) {
+  this.name = name;
+  this.id = id;
 }
 
+// We might not ultimately need this, but I think it's a step in the right direction in terms of "switching" our app based on the current month. Right now it's just triggering a console.log.
+function getDate () {
+  let d = new Date();
+  let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  let thisMonth = months[d.getMonth()];
+  // console.log(thisMonth);
+  return (thisMonth === 'September' || thisMonth === 'October')? console.log('Halloween')
+    : (thisMonth === 'November' || thisMonth === 'December') ? console.log('Christmas')
+      : (thisMonth === 'January' || thisMonth === 'February' || thisMonth === 'March'|| thisMonth === 'April')? console.log('RomCom')
+        : (thisMonth === 'May'|| thisMonth === 'June' || thisMonth === 'July' || thisMonth === 'August') ?
+          console.log('Summer') : console.log('undefined');
+}
 
 
 // listener
