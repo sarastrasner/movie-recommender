@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include('../partials/head') -%>
+  <link rel="stylesheet" href="/styles/reset.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/layout2.css">
+  <link rel="stylesheet" href="/styles/modules.css">
+  <link rel="stylesheet" href="/styles/themes.css">
   </head>
   <body>
     <header>Your Random Movie</header>
     <main>
-      <ul>
-        <img src="<%= randomMovieSelection.image_url %>" >
-        <h2><%= randomMovieSelection.title %></h2>
-        <p><%= randomMovieSelection.description %></p>
-      </ul>
+    <h1>Testing</h1>
+            <ul>
+              <img src="<%= randomMovieSelection.image_url %>" >
+              <h2><%= randomMovieSelection.title %></h2>
+              <p><%= randomMovieSelection.description %></p>
+            </ul>
+      <button type="button" id="randomMovie">Random Movie</button>
+      <button type="button" id="keywordSearch">Search by Keyword</button>
+      <button type="button" id="recommendations">Recommendations</button>
+      <button type="button" id="aboutUs" onclick="window.location.href='/about';">About Us</button>
     </main>
     <footer>
       <%- include('../partials/footer') -%>
