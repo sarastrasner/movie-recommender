@@ -44,7 +44,63 @@ footer{
 
 @media only screen and (min-width:768px){
   body{
-    width: 960px;
+    width: 100%;
     margin: auto;
   }
+  main{
+    grid-template-columns: 1fr 0.1fr 1fr 1fr 1fr;
+    grid-template-rows: 110px 110px 110px 110px 30px 30px 30px 30px;
+    display: grid;
+  }
+
+  h1{
+    grid-row: 5/9;
+    grid-column: 1/2;
+    font-size: 3em;
+    line-height: 1.5em;
+    text-align: center;
+    background-color:darkslategray;
+  }
+
+  button{
+    background-color:darkslategray;
+    height: 30px;
+    border: none;
+    display: inline-block;
+    border: none;
+    margin: 0;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: background 250ms ease-in-out, 
+                transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  
+
+
+  #recommendations{
+    grid-column: 3/6;
+    grid-row: 5/6;
+  }
+  
+
+  #randomMovie{
+    grid-column: 3/6;
+    grid-row: 6/7;
+  }
+  
+  #keywordSearch{
+    grid-column: 3/6;
+    grid-row: 7/8;
+  }
+  
+  #aboutUs{
+    grid-column: 3/6;
+    grid-row: 8/9;
+  }
+  
 }
