@@ -9,5 +9,21 @@ body{
   align-content: center;
   display: grid;
   text-align: center;
+  background-image: url(../img/christmas.jpeg);
+}
+
+.halloween{
   background-image: url(../img/halloween.jpeg);
+}
+
+.romcom{
+  background-image: url(../img/romcom.jpeg);
+}
+
+.summer{
+  background-image: url(../img/summer.jpeg);
+}
+
+.christmas{
+  background-image: url(../img/christmas.jpeg);
 }
