@@ -1,0 +1,50 @@
+body{
+  /* overflow: scroll; */
+  width: 480px;
+  margin: auto;
+  text-align: center;
+}
+
+main{
+  grid-template-columns: 1fr;
+  grid-template-rows: 75px 75px 75px 75px 75px;
+  display: grid;
+}
+
+button{
+  margin: 10px;
+  background-color:darkslategray;
+  border: none;
+}
+
+h1{
+  grid-row: 1/2;
+  font-size: 3em;
+  line-height: 1.5em;
+}
+
+#randomMovie{
+  grid-row: 2/3;
+}
+
+#keywordSearch{
+  grid-row: 3/4;
+}
+
+#recommendations{
+  grid-row: 4/5;
+}
+
+footer{
+  grid-row: 5/6;
+  font-size: 1.2em;
+  line-height: 1em;
+  margin: 10px;
+}
+
+@media only screen and (min-width:768px){
+  body{
+    width: 960px;
+    margin: auto;
+  }
+}
