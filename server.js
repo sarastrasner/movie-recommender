@@ -31,6 +31,8 @@ app.get('/random', generateRandomMovie);
 //app.get('/test', ); // route for testing functions using console.log
 app.get('/new', renderGenreSearch)
 app.post('/genreSearch', searchByGenre)
+app.get('/about', renderAboutPage)
+
 
 
 
@@ -108,6 +110,10 @@ function searchByGenre(request, response) {
     })
     .catch(error => console.log(error));
 
+}
+
+function renderAboutPage(request, response) {
+  response.status(200).render('pages/about');
 }
 
 // constructors
