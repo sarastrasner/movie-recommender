@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') -%>
+  </head>
+  <body>
+    <header>Select a genre to search by</header>
+    <main>
+      <form action='/genreSearch' method='post'>
+        <select name="genre" id="genre-select">
+          <option value="">--Please choose a genre--</option>
+          <% genre.forEach(item => { %>
+            <option value="<%= item.id %>"><%= item.name %></option>
+          <% }) %>
+        </select>
+        <button type="submit">
+          Search
+        </button>
+      </form>
+    </main>
+    <footer>
+      <%- include('../partials/footer') -%>
+    </footer>
+  </body>
+</html>
