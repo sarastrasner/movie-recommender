@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include('partials/head') -%>
-  </head>
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/layout5.css">
+    <link rel="stylesheet" href="/styles/modules.css">
+    <link rel="stylesheet" href="/styles/themes.css">  </head>
   <body>
     <header>About Us</header>
     <main>
-      <article class="Cavendish" id="russert">
         <a href="https://www.linkedin.com/in/sararussert/"><img src="img/Russert.jpeg" alt="Sara Russert" title="Sara Russert" /></a>
         <h2>Sara Russert</h2>
-        <h2>Software Engineer</h2>
+        <h3>Software Engineer</h3>
         <p>My favorite movie is <a href="https://gamechangersmovie.com/">The Game Changers</a>.My name is Sara and I am a Software Engineer. I have a proven track record of achieving challenging goals through determination individually and on teams through collaboration. I am a highly driven, pragmatic and logical thinker which makes me an excellent problem solver and a natural project manager.  I am looking for an opportunities to develop greater proficiency with javascript and backend development because those are specialized areas that I have a passion for and would like to continue gaining strength in.</p>
-        <article class="Cavendish" id="strasner">
           <a href="https://www.linkedin.com/in/sarastrasner/"><img src="img/strasner.jpeg" alt="Sara Strasner" title="Sara Strasner" /></a>
           <h2>Sara Strasner</h2>
-          <h2>Software Developer</h2>
+          <h3>Software Developer</h3>
           <p>My favorite movie is <a href="https://gamechangersmovie.com/">The Game Changers</a>Sara is a Seattle-based software developer. Before transitioning into software, Sara worked in Museum education where she managed recruitment, registration, staffing, budgets, and events for museum Education programs. Sara enjoys running, baking, looking at cat memes on the internet, and finding spelling errors in other peoples' code.</p>
-      <article class="Cavendish" id="james">
         <a href="https://www.linkedin.com/in/jamesbswift/"><img src="img/james.jpg" alt="James" title="James" /></a>
         <h2>James Swift</h2>
-        <h2>Software Developer</h2>
+        <h3>Software Developer</h3>
         <p>My favorite movie is <a href="https://gamechangersmovie.com/">The Game Changers</a>. My goal for Code Fellows is to gain skills needed to become a software developer.  I chose coding school to constantly learn and grow in class and my future job. I live in Seattle, Wa.</p>
-      </article>
-    </main>
+        <button type="button" id="randomMovie" onclick="window.location.href='/random';">Random Movie</button>
+        <button type="button" id="keywordSearch" onclick="window.location.href='/new';">Search by Keyword</button>
+        <button type="button" id="recommendations">Recommendations</button>
+        <button type="button" id="aboutUs" onclick="window.location.href='/about';">About Us</button>
+      </main>
     <footer>
       <%- include('partials/footer') -%>
     </footer>

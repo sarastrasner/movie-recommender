@@ -5,16 +5,28 @@ body{
   text-align: center;
 }
 
-
-/* form{
-  margin: auto;
-  grid-row: 1/2;
-} */
-
 main{
   grid-template-columns: 1fr;
-  grid-template-rows: 75px 75px 75px 75px 75px;
+  grid-template-rows: 600px 75px 75px 75px 75px 75px;
   display: grid;
+}
+
+h1{
+  display: none;
+}
+
+ul {
+  grid-template-rows:2/3;
+}
+
+img{
+  max-width: 300px;
+  margin:auto;
+}
+
+ul > h2{
+  font-weight: 700;
+  padding: 10px;
 }
 
 button{
@@ -23,26 +35,27 @@ button{
   border: none;
 }
 
-h1{
+header{
   grid-row: 1/2;
   font-size: 3em;
   line-height: 1.5em;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 #randomMovie{
-  grid-row: 2/3;
-}
-
-#keywordSearch{
   grid-row: 3/4;
 }
 
-#recommendations{
+#keywordSearch{
   grid-row: 4/5;
 }
 
-footer{
+#recommendations{
   grid-row: 5/6;
+}
+
+footer{
+  grid-row: 6/7;
   font-size: 1.2em;
   line-height: 1em;
   margin: 10px;
@@ -50,20 +63,36 @@ footer{
 }
 
 @media only screen and (min-width:768px){
+
+  img{
+    max-height: 360px;
+    float: left;
+    padding: 20px;
+  }
+
+  ul{
+    grid-column: 1/6;
+    grid-row: 1/4;
+    margin: auto;
+    align-self: center;
+    padding: 20px;
+  }
+
+  ul > h2{
+    font-weight: 700;
+    padding: 10px;
+    font-size: 2em;
+  }
+
+  ul>p{
+    padding: 10px;
+    font-size: 1.5em;
+    width: 1000px;
+  }
+
   body{
     width: 100%;
     margin: auto;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  }
-
-  header{
-    font-size: 2em;
-    padding: 10px;
-  }
-
-  form{
-    margin: auto;
-    grid-column: 1/6;
   }
   main{
     grid-template-columns: 1fr 0.1fr 1fr 1fr 1fr;
@@ -72,6 +101,7 @@ footer{
   }
 
   h1{
+    display: initial;
     grid-row: 5/9;
     grid-column: 1/2;
     font-size: 3em;
