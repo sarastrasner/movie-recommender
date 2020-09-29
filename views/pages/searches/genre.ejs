@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') -%>
+  </head>
+  <body>
+    <header>Genre Search Results</header>
+    <main>
+      <ul>
+        <% genreResults.forEach(movie => { %>
+          <img src="<%= movie.image_url %>" >
+          <h2><%= movie.title %></h2>
+          <p><%= movie.description %></p>
+        <% }) %>
+      </ul>
+    </main>
+    <footer>
+      <%- include('../partials/footer') -%>
+    </footer>
+  </body>
+</html>
