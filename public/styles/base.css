@@ -1,0 +1,13 @@
+*{
+  box-sizing: border-box;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: white;
+}
+
+body{
+  margin: auto;
+  align-content: center;
+  display: grid;
+  text-align: center;
+  background-image: url(../img/halloween.jpeg);
+}
