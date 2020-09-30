@@ -25,8 +25,8 @@ button{
 
 h1{
   grid-row: 1/2;
-  font-size: 3em;
-  line-height: 1.5em;
+  font-size: 1.4em;
+  line-height: 3em;
 }
 
 #randomMovie{
@@ -74,8 +74,8 @@ footer{
   h1{
     grid-row: 5/9;
     grid-column: 1/2;
-    font-size: 3em;
-    line-height: 1.5em;
+    font-size: 1.5em;
+    line-height: 1.4em;
     text-align: center;
     background-color: #003D57;
   }

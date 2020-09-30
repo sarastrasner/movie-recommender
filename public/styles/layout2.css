@@ -73,6 +73,7 @@ footer{
   ul{
     grid-column: 1/6;
     padding: 0px 15px 0px 15px;
+    display: inline-block;
   }
 
   body{
@@ -86,14 +87,18 @@ footer{
     display: grid;
   }
 
+  ul>p{
+    padding-bottom: 10px;
+  }
+
   h1{
-    display: initial;
     grid-row: 5/9;
+    display: initial;
     grid-column: 1/2;
-    font-size: 3em;
-    line-height: 1.5em;
+    font-size: 1.5em;
+    line-height: 1.4em;
     text-align: center;
-    background-color:#003D57;
+    background-color: #003D57;
   }
 
   button{
