@@ -21,7 +21,7 @@ img{
 
 button{
   margin: 10px;
-  background-color:darkslategray;
+  background-color:#003D57;
   padding: 5px;
   border: none;
 }
@@ -73,6 +73,31 @@ footer{
     height: 200px;
     width: 900px;
     margin: auto;
+    padding: 10px;
+    overflow: scroll;
+  }
+
+  #review{
+    text-align: left;
+    padding-left: 35%;
+  }
+
+  div>p{
+    padding: 5px;
+  }
+
+  ul{
+    grid-column: 1/6;
+  }
+
+  h2{
+    font-size: 2em;
+  }
+
+
+  li{
+    display: block;
+    height: auto;
   }
 
   header{
@@ -85,7 +110,7 @@ footer{
 
   img{
     float: left;
-    max-width: 200px;
+    height: 100%;
     display: block;
     padding: 0px 5px 0px 5px;
   }
@@ -102,17 +127,17 @@ footer{
   }
 
   h1{
-    display: initial;
     grid-row: 5/9;
     grid-column: 1/2;
-    font-size: 3em;
-    line-height: 1.5em;
+    font-size: 1.5em;
+    line-height: 1.4em;
     text-align: center;
-    background-color:darkslategray;
+    background-color: #003D57;
+    display: initial;
   }
 
   button{
-    background-color:darkslategray;
+    background-color:#003D57;
     height: 30px;
     border: none;
     display: inline-block;

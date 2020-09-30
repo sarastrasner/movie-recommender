@@ -31,3 +31,7 @@ body{
 .christmas{
   background-image: url(/img/christmas.jpeg);
 } 
+
+input {
+  color: black;
+}
