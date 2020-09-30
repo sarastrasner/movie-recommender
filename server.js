@@ -23,7 +23,7 @@ app.use(express.urlencoded({extended : true}));
 app.use(methodOverride('_method'));
 
 let seasonalKeyword = 9799;
-getDate();
+// getDate();
 
 
 // routes
