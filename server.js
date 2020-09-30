@@ -22,13 +22,15 @@ app.use(express.static('./public'));
 app.use(express.urlencoded({extended : true}));
 app.use(methodOverride('_method'));
 
-let seasonalKeyword = 3335;
+let seasonalKeyword = 9799;
+getDate();
+
 
 // routes
 
 app.get('/', renderHomePage);
 app.get('/random', generateRandomMovie);
-app.get('/test', renderRecommendations); // route for testing functions using console.log
+//app.get('/test', ); // route for testing functions using console.log
 app.get('/new', renderGenreSearch);
 app.post('/genreSearch', searchByGenre);
 app.get('/about', renderAboutPage);
@@ -38,6 +40,29 @@ app.post('/', addRecommendedToData);
 
 
 // functions
+
+function getDate () {
+  let d = new Date();
+  let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  switch(months[d.getMonth()]) {
+  case 'September' || 'October':
+    seasonalKeyword = 3335
+    break;
+  case 'November' || 'December':
+    seasonalKeyword = 207317
+    break;
+  case 'January' || 'February' || 'March' || 'April':
+    seasonalKeyword = 9799
+    break;
+  case 'May' || 'June' || 'July' || 'August':
+    seasonalKeyword = 13088
+    break;
+  default:
+    seasonalKeyword = 13088
+    break;
+  }
+}
+
 
 function proofOfLife(request, response) {
   response.status(200).render('pages/index');
@@ -60,11 +85,11 @@ function generateRandomMovie(request, response) {
     include_adult: false,
     include_video: false,
     page: rng(5),
-    with_keywords: seasonalKeyword // this is the number for halloween, christmas would have a different keyword id
+    with_keywords: seasonalKeyword
   }
   superagent.get(url).query(queryObject)
     .then(data => {
-      let constructedMovie = data.body.results.map(movie => new MovieObj(movie));
+      let constructedMovie = data.body.results.map(movie => new MovieObj(movie, seasonalKeyword));
       let randomMovie = constructedMovie[rng(20)];
       response.status(200).render('pages/searches/showRandom', {randomMovieSelection: randomMovie})
     })
@@ -106,7 +131,7 @@ function searchByGenre(request, response) {
   }
   superagent.get(url).query(queryObject)
     .then(data => {
-      let constructedMovie = data.body.results.map(movie => new MovieObj(movie));
+      let constructedMovie = data.body.results.map(movie => new MovieObj(movie, seasonalKeyword));
       response.status(200).render('pages/searches/genre', {genreResults: constructedMovie})
     })
     .catch(error => console.log(error));
@@ -139,7 +164,7 @@ function renderRecommendations(request, response) {
 
   Promise.all([promise1, promise2]).then((values) => {
     let recommendations = []
-    values[0].rows.forEach(movie => recommendations.push(new RecommendedMovieObj(movie)));
+    values[0].rows.forEach(movie => recommendations.push(new RecommendedMovieObj(movie, seasonalKeyword)));
     let reviews = values[1].rows;
     recommendations.forEach(movie => {
       for (let i = 0; i < reviews.length; i++) {
@@ -154,13 +179,15 @@ function renderRecommendations(request, response) {
 
 
 
+
 // constructors
 
-function MovieObj(movie) {
+function MovieObj(movie, seasonalKeyword) {
   this.movie_id = movie.id;
   this.title = movie.title;
   this.description = movie.overview;
   this.image_url = `https://image.tmdb.org/t/p/w500${movie.poster_path}`; // the beginning part is refering to the hosting site, and the size (w500)
+  this.seasonal_keyword = seasonalKeyword;
 }
 
 function RecommendedMovieObj(movie) {
@@ -168,25 +195,13 @@ function RecommendedMovieObj(movie) {
   this.image_url = movie.image_url;
   this.title = movie.title;
   this.description = movie.description;
+  this.seasonal_keyword = seasonalKeyword;
   this.reviews = [];
 }
 
 function Genre(genreObj) {
   this.name = genreObj.name;
   this.id = genreObj.id;
-}
-
-// We might not ultimately need this, but I think it's a step in the right direction in terms of "switching" our app based on the current month. Right now it's just triggering a console.log.
-function getDate () {
-  let d = new Date();
-  let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  let thisMonth = months[d.getMonth()];
-  // console.log(thisMonth);
-  return (thisMonth === 'September' || thisMonth === 'October')? console.log('Halloween')
-    : (thisMonth === 'November' || thisMonth === 'December') ? console.log('Christmas')
-      : (thisMonth === 'January' || thisMonth === 'February' || thisMonth === 'March'|| thisMonth === 'April')? console.log('RomCom')
-        : (thisMonth === 'May'|| thisMonth === 'June' || thisMonth === 'July' || thisMonth === 'August') ?
-          console.log('Summer') : console.log('undefined');
 }
 
 
