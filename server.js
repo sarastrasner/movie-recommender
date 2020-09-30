@@ -22,7 +22,7 @@ app.use(express.static('./public'));
 app.use(express.urlencoded({extended : true}));
 app.use(methodOverride('_method'));
 
-let seasonalKeyword = 9799;
+let seasonalKeyword = 13088;
 // getDate();
 
 
@@ -180,7 +180,7 @@ function addRecommendedToData (request, response) {
 
 // this function pulls database info in and displays it to the recommendations page
 function renderRecommendations(request, response) {
-  let sql = `SELECT * FROM recommendations`;
+  let sql = `SELECT * FROM recommendations WHERE seasonal_keyword=${seasonalKeyword};`;
   let promise1 = client.query(sql)
 
   let sql2 = `SELECT * FROM reviews;`;
