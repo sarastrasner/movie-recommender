@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%- include('partials/head') -%>
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/layout3.css">
+    <link rel="stylesheet" href="/styles/modules.css">
+    <link rel="stylesheet" href="/styles/themes.css">
   </head>
   <body>
     <header>Write your review 
@@ -17,10 +21,10 @@
           </label>
           <label for = "review"></label>
           <span> Review </span>
-          <input type=text name=review placeholder="review">
+          <input type=text name=review id="reviewbox" placeholder="review">
           </label>
         </fieldset>
-        <button type="submit">Add your review</button>
+        <button type="submit" id="submit">Add your review</button>
       </form>
     </main>
     <footer>
