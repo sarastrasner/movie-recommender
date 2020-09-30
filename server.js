@@ -14,7 +14,7 @@ const methodOverride = require('method-override');
 // Global variables
 
 const app = express();
-let PORT = process.env.PORT;
+let PORT = process.env.PORT || 3000;
 const client = new pg.Client(process.env.DATABASE_URL);
 
 app.set('view engine', 'ejs');
@@ -28,11 +28,12 @@ let seasonalKeyword = 3335;
 
 app.get('/', renderHomePage);
 app.get('/random', generateRandomMovie);
-//app.get('/test', ); // route for testing functions using console.log
-app.get('/new', renderGenreSearch)
-app.post('/genreSearch', searchByGenre)
-app.get('/about', renderAboutPage)
-
+app.get('/test', renderRecommendations); // route for testing functions using console.log
+app.get('/new', renderGenreSearch);
+app.post('/genreSearch', searchByGenre);
+app.get('/about', renderAboutPage);
+app.get('/recommendations', renderRecommendations);
+app.post('/', addRecommendedToData);
 
 
 
@@ -116,6 +117,43 @@ function renderAboutPage(request, response) {
   response.status(200).render('pages/about');
 }
 
+//function to add info into recommendations table
+function addRecommendedToData (request, response) {
+  const {image_url, title, description} = request.data.body.results;
+  const sql = 'INSERT INTO recommendations (image_url, title, description) VALUES ($1, $2, $3);';
+  const safeValues = [image_url, title, description];
+  client.query(sql, safeValues)
+    .then((results) => {
+      console.log(results)
+      response.redirect(`/`)
+    })
+}
+
+// this function pulls database info in and displays it to the recommendations page
+function renderRecommendations(request, response) {
+  let sql = `SELECT * FROM recommendations`;
+  let promise1 = client.query(sql)
+
+  let sql2 = `SELECT * FROM reviews;`;
+  let promise2 = client.query(sql2)
+
+  Promise.all([promise1, promise2]).then((values) => {
+    let recommendations = []
+    values[0].rows.forEach(movie => recommendations.push(new RecommendedMovieObj(movie)));
+    let reviews = values[1].rows;
+    recommendations.forEach(movie => {
+      for (let i = 0; i < reviews.length; i++) {
+        if (movie.movie_id === reviews[i].fkmovie_id) {
+          movie.reviews.push(reviews[i]);
+        }
+      }
+    });
+    response.status(200).render('pages/recommendations', {recommended: recommendations})
+  });
+}
+
+
+
 // constructors
 
 function MovieObj(movie) {
@@ -125,14 +163,13 @@ function MovieObj(movie) {
   this.image_url = `https://image.tmdb.org/t/p/w500${movie.poster_path}`; // the beginning part is refering to the hosting site, and the size (w500)
 }
 
-// don't know if we ultimately want two constructors. We will want to talk about the purpose of each of these
-// function recommendedMovieObj(movie) {
-//   this.movie_id = movie.id;
-//   this.image_url = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-//   this.title = movie.title;
-//   this.description = movie.overview;
-//   this.runtime = movie.runtime;
-// }
+function RecommendedMovieObj(movie) {
+  this.movie_id = movie.movie_id;
+  this.image_url = movie.image_url;
+  this.title = movie.title;
+  this.description = movie.description;
+  this.reviews = [];
+}
 
 function Genre(genreObj) {
   this.name = genreObj.name;
