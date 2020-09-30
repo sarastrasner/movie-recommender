@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('partials/head') -%>
+  </head>
+  <body>
+    <header>Write your review 
+      <!-- update this for launch -->
+    </header>
+    <main>
+      <form action='/reviews/<%= movie_id %>?_method=PUT' method="post">
+        <fieldset>
+          <input type=hidden name=movie_id value="<%= movie_id %>">
+          <label for = "Author"></label>
+          <span> Author </span>
+          <input type=input name=author placeholder="name">
+          </label>
+          <label for = "review"></label>
+          <span> Review </span>
+          <input type=text name=review placeholder="review">
+          </label>
+        </fieldset>
+        <button type="submit">Add your review</button>
+      </form>
+    </main>
+    <footer>
+      <%- include('partials/footer') -%>
+    </footer>
+  </body>
+</html>

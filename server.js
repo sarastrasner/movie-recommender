@@ -14,7 +14,7 @@ const methodOverride = require('method-override');
 // Global variables
 
 const app = express();
-let PORT = process.env.PORT;
+let PORT = process.env.PORT || 3000;
 const client = new pg.Client(process.env.DATABASE_URL);
 
 app.set('view engine', 'ejs');
@@ -36,6 +36,8 @@ app.post('/genreSearch', searchByGenre);
 app.get('/about', renderAboutPage);
 app.get('/recommendations', renderRecommendations);
 app.post('/', addRecommendedToData);
+app.get('/reviews/:id', renderReview);
+app.put('/reviews/:id', addReview);
 
 
 
@@ -72,6 +74,14 @@ function proofOfLife(request, response) {
 function rng(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
+function pageRng(max) {
+  let num = Math.floor(Math.random() * Math.floor(max));
+  if (num === 0) {
+    num = Math.floor(Math.random() * Math.floor(max));
+  } else {
+    return num;
+  }
+}
 
 
 // This function makes an API call for "halloween" movies and passes them through a constructor to streamline the data. The constructed objects are stored globally in an array. This is our first main pull required for generating a random movie selection. We may want to add to this if we need more data on these movies like keywords. Returns a randomly generated movie based on the array to 'searches/showRandom'
@@ -84,7 +94,7 @@ function generateRandomMovie(request, response) {
     sort_by: 'popularity.desc',
     include_adult: false,
     include_video: false,
-    page: rng(5),
+    page: pageRng(5),
     with_keywords: seasonalKeyword
   }
   superagent.get(url).query(queryObject)
@@ -100,6 +110,13 @@ function generateRandomMovie(request, response) {
 //renders home page
 function renderHomePage(request, response) {
   response.status(200).render('pages/index');
+}
+
+//renders review page
+function renderReview(request, response) {
+  const id = request.params.id;
+  console.log(id);
+  response.status(200).render(`pages/reviews`, {movie_id: id});
 }
 
 // this function calls the api and gets the list of genre to use for our dropdown menu
@@ -144,13 +161,16 @@ function renderAboutPage(request, response) {
 
 //function to add info into recommendations table
 function addRecommendedToData (request, response) {
-  const {image_url, title, description} = request.data.body.results;
-  const sql = 'INSERT INTO recommendations (image_url, title, description) VALUES ($1, $2, $3);';
-  const safeValues = [image_url, title, description];
+  const {movie_id, image_url, title, description, seasonal_keyword} = request.body;
+  const sql = 'INSERT INTO recommendations (movie_id, image_url, title, description, seasonal_keyword) VALUES ($1, $2, $3, $4, $5);';
+  const safeValues = [movie_id, image_url, title, description, seasonal_keyword];
   client.query(sql, safeValues)
     .then((results) => {
       console.log(results)
-      response.redirect(`/`)
+      response.status(200).redirect('/recommendations');
+    }).catch(error =>{
+      let str = 'This movie has already been recommended';
+      response.render('pages/error', {message: str})
     })
 }
 
@@ -176,6 +196,19 @@ function renderRecommendations(request, response) {
     response.status(200).render('pages/recommendations', {recommended: recommendations})
   });
 }
+
+// adds a review to a recommended movie
+function addReview(request, response) {
+  console.log(request.body);
+  let {movie_id, author, review} = request.body;
+  const sql ='INSERT INTO reviews (fkmovie_id, author, review) VALUES ($1, $2, $3);';
+  const safeValues = [movie_id, author, review];
+  client.query(sql, safeValues)
+    .then((results) => {
+      response.status(200).redirect('/recommendations');
+    })
+}
+
 
 
 
