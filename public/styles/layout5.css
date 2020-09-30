@@ -74,6 +74,12 @@ footer{
     width: 900px;
     margin: auto;
     padding: 10px;
+    overflow: scroll;
+  }
+
+  #review{
+    text-align: left;
+    padding-left: 35%;
   }
 
   div>p{

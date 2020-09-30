@@ -18,13 +18,12 @@
             <h2><%= movie.title %></h2>
             <p><%= movie.description %></p>
             <button type="button"><a href="/reviews/<%= movie.movie_id %>">Add a Review</a></button>
-            <h2>Reviews</h2>
-            <% movie.reviews.forEach(review => { %>
-              <p>Author: <%= review.author %></p>
-              <p>Review: <%= review.review %></p>
-          </div>
-          </li>
-          <% }) %>
+              <h2>Reviews</h2>
+              <% movie.reviews.forEach(review => { %>
+                <p id="review">Review: "<%= review.review %>" by <%= review.author %></p>
+                <% }) %>
+            </div>
+            </li>
         <% }) %>
       </ul>
       <h1>Testing</h1>
