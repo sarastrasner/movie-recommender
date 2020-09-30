@@ -1,7 +1,7 @@
 *{
   box-sizing: border-box;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  color: white;
+  /* color: white; */
 }
 
 body{
@@ -18,20 +18,20 @@ body{
 
 .halloween{
   background: url(/img/halloween.jpeg);
+  color: white;
 }
 
 .romcom{
   background: url(/img/romcom.jpeg);
+  color: white;
 }
 
 .summer{
   background: url(/img/summer.jpeg);
+  color:#062940;
 }
 
 .christmas{
   background-image: url(/img/christmas.jpeg);
+  color: white;
 } 
-
-input {
-  color: black;
-}
