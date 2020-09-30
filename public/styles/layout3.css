@@ -109,13 +109,13 @@ footer{
   }
 
   h1{
-    display: initial;
     grid-row: 5/9;
     grid-column: 1/2;
-    font-size: 3em;
-    line-height: 1.5em;
+    font-size: 1.5em;
+    line-height: 1.4em;
+    display: initial;
     text-align: center;
-    background-color:#003D57;
+    background-color: #003D57;
   }
 
   button{
