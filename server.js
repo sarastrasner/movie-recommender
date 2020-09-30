@@ -115,7 +115,6 @@ function renderHomePage(request, response) {
 //renders review page
 function renderReview(request, response) {
   const id = request.params.id;
-  console.log(id);
   response.status(200).render(`pages/reviews`, {movie_id: id});
 }
 
@@ -124,7 +123,7 @@ function renderGenreSearch(request, response) {
   let url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.TMDBAPIKEY}&language=en-US`
   superagent.get(url)
     .then(data => {
-      let genreOptions = data.body.genres.map(genreObj => new Genre(genreObj));console.log(genreOptions);
+      let genreOptions = data.body.genres.map(genreObj => new Genre(genreObj));
       response.status(200).render('pages/searches/new', {genre: genreOptions})
     })
     .catch(error => console.log(error));
@@ -148,8 +147,13 @@ function searchByGenre(request, response) {
   }
   superagent.get(url).query(queryObject)
     .then(data => {
-      let constructedMovie = data.body.results.map(movie => new MovieObj(movie, seasonalKeyword));
-      response.status(200).render('pages/searches/genre', {genreResults: constructedMovie})
+      if (data.body.results < 1) {
+        let str = 'There are no movies that match your request, please try again';
+        response.status(200).render('pages/error', {message: str});
+      } else {
+        let constructedMovie = data.body.results.map(movie => new MovieObj(movie, seasonalKeyword));
+        response.status(200).render('pages/searches/genre', {genreResults: constructedMovie})
+      }
     })
     .catch(error => console.log(error));
 
@@ -199,7 +203,6 @@ function renderRecommendations(request, response) {
 
 // adds a review to a recommended movie
 function addReview(request, response) {
-  console.log(request.body);
   let {movie_id, author, review} = request.body;
   const sql ='INSERT INTO reviews (fkmovie_id, author, review) VALUES ($1, $2, $3);';
   const safeValues = [movie_id, author, review];

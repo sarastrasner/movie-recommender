@@ -17,7 +17,18 @@
               <img src="<%= movie.image_url %>" >
               <h2><%= movie.title %></h2>
               <p><%= movie.description %></p>
-              <p><button type="button" >Add to Recommendations</button></p>
+              <form action="/" method="post">
+                <fieldset>
+                  <input type="hidden" name="movie_id" value="<%= movie.movie_id%>">
+                  <input type="hidden" name="image_url" value="<%= movie.image_url %>">
+                  <input type="hidden" name="title" value="<%= movie.title %>">
+                  <input type="hidden" name="description" value="<%= movie.description %>">
+                  <input type="hidden" name="seasonal_keyword" value="<%= movie.seasonal_keyword %>">
+                  <div>
+                    <button class="detail_button" type="submit">Add to Recommendations</button>
+                  </div>
+                </fieldset>
+              </form>
             </div>
           </li>
             <% }) %>
