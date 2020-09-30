@@ -217,9 +217,9 @@ function addReview(request, response) {
 
 function MovieObj(movie, seasonalKeyword) {
   this.movie_id = movie.id;
-  this.title = movie.title;
-  this.description = movie.overview;
-  this.image_url = `https://image.tmdb.org/t/p/w500${movie.poster_path}`; // the beginning part is refering to the hosting site, and the size (w500)
+  this.title = movie.title ? movie.title : 'No Title';
+  this.description = movie.overview ? movie.overview : 'Movie description is not available';
+  this.image_url = `https://image.tmdb.org/t/p/w500${movie.poster_path}` ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '/img/no-poster-available.jpeg'; // the beginning part is refering to the hosting site, and the size (w500)
   this.seasonal_keyword = seasonalKeyword;
 }
 
