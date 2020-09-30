@@ -14,23 +14,22 @@ function getDate () {
           currentSeason ='summer' : currentSeason = 'christmas';
 }
 
+getDate();
 
-currentSeason = 'halloween';
+currentSeason = 'romcom';
 console.log(currentSeason);
-
+renderSeasonalCSS(currentSeason);
 
 function renderSeasonalCSS (currentSeason){
   $('body').addClass(currentSeason);
 }
+renderSeasonaltitle(currentSeason);
 
 function renderSeasonaltitle (currentSeason){
-  (currentSeason==='halloween')? $('h1').text('Spooky Halloween Movie Recommender')
-    : (currentSeason==='christmas')? $('h1').text('Holly Jolly Movie Recommender')
-      : (currentSeason==='romcom')? $('h1').text('RomCom Movie Recommender')
-        : (currentSeason==='summer')? $('h1').text('Summer Movie Recommender')
+  (currentSeason ==='halloween')? $('h1').text('Spooky Halloween Movie Recommender')
+    : (currentSeason ==='christmas')? $('h1').text('Holly Jolly Movie Recommender')
+      : (currentSeason ==='romcom')? $('h1').text('RomCom Movie Recommender')
+        : (currentSeason ==='summer')? $('h1').text('Summer Movie Recommender')
           : $('h1').text('Holly Jolly Movie Recommender')
 }
 
-getDate();
-renderSeasonalCSS(currentSeason);
-renderSeasonaltitle(currentSeason);
