@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('partials/head') -%>
+  </head>
+  <body>
+    <header>Recommended Movies</header>
+    <main>
+      <ul>
+        <% recommended.forEach(movie => { %>
+          <img src="<%= movie.image_url %>" >
+          <h2><%= movie.title %></h2>
+          <p><%= movie.description %></p>
+          <h2>Reviews</h2>
+         <% movie.reviews.forEach(review => { %>
+          <p>Author: <%= review.author %></p>
+          <p>Review: <%= review.review %></p>
+          <% }) %>
+        <% }) %>
+      </ul>
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>
