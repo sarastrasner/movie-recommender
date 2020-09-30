@@ -5,23 +5,27 @@
 }
 
 body{
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   margin: auto;
   align-content: center;
   display: grid;
   text-align: center;
-  background-image: url(/img/christmas.jpeg);
+  background-image: url(/img/christmas.jpeg) no-repeat center center fixed;
 }
 
 .halloween{
-  background-image: url(/img/halloween.jpeg);
+  background: url(/img/halloween.jpeg);
 }
 
 .romcom{
-  background-image: url(/img/romcom.jpeg);
+  background: url(/img/romcom.jpeg);
 }
 
 .summer{
-  background-image: url(/img/summer.jpeg);
+  background: url(/img/summer.jpeg);
 }
 
 .christmas{
