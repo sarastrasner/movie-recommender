@@ -31,7 +31,7 @@ ul > h2{
 
 button{
   margin: 10px;
-  background-color:darkslategray;
+  background-color:#003D57;
   border: none;
 }
 
@@ -72,22 +72,7 @@ footer{
 
   ul{
     grid-column: 1/6;
-    grid-row: 1/4;
-    margin: auto;
-    align-self: center;
-    padding: 20px;
-  }
-
-  ul > h2{
-    font-weight: 700;
-    padding: 10px;
-    font-size: 2em;
-  }
-
-  ul>p{
-    padding: 10px;
-    font-size: 1.5em;
-    width: 1000px;
+    padding: 0px 15px 0px 15px;
   }
 
   body{
@@ -96,6 +81,7 @@ footer{
   }
   main{
     grid-template-columns: 1fr 0.1fr 1fr 1fr 1fr;
+    grid-auto-rows: max-content;
     grid-template-rows: 110px 110px 110px 110px 30px 30px 30px 30px;
     display: grid;
   }
@@ -107,11 +93,11 @@ footer{
     font-size: 3em;
     line-height: 1.5em;
     text-align: center;
-    background-color:darkslategray;
+    background-color:#003D57;
   }
 
   button{
-    background-color:darkslategray;
+    background-color: #003D57;
     height: 30px;
     border: none;
     display: inline-block;
