@@ -1,7 +1,6 @@
 *{
   box-sizing: border-box;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  /* color: white; */
+  font-family: 'Raleway', sans-serif;
 }
 
 body{
@@ -33,5 +32,6 @@ body{
 
 .christmas{
   background-image: url(/img/christmas.jpeg);
-  color: white;
+  color: #600000;
 } 
+

@@ -5,7 +5,8 @@
     <link rel="stylesheet" type="text/css" href="/styles/base.css">
     <link rel="stylesheet" type="text/css" href="/styles/layout5.css">
     <link rel="stylesheet" type="text/css" href="/styles/modules.css">
-    <link rel="stylesheet" type="text/css" href="/styles/modules.css">
+    <link rel="stylesheet" type="text/css" href="/styles/themes.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Raleway&display=swap" rel="stylesheet">
   </head>
   <body>
     <header>Recommended Movies</header>
@@ -13,7 +14,7 @@
       <ul>
         <% recommended.forEach(movie => { %>
           <li>
-          <div>
+          <div class="background">
             <img src="<%= movie.image_url %>" >
             <h2><%= movie.title %></h2>
             <p><%= movie.description %></p>

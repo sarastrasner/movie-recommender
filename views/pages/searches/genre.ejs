@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/styles/layout4.css">
     <link rel="stylesheet" href="/styles/modules.css">
     <link rel="stylesheet" href="/styles/themes.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Raleway&display=swap" rel="stylesheet">
   </head>
   <body>
     <header>Genre Search Results</header>
@@ -13,7 +14,7 @@
       <ul>
         <% genreResults.forEach(movie => { %>
           <li>
-            <div>
+            <div class="background">
               <img src="<%= movie.image_url %>" >
               <h2><%= movie.title %></h2>
               <p><%= movie.description %></p>

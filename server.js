@@ -22,7 +22,7 @@ app.use(express.static('./public'));
 app.use(express.urlencoded({extended : true}));
 app.use(methodOverride('_method'));
 
-let seasonalKeyword = 13088;
+let seasonalKeyword = 3335;
 // getDate();
 
 
