@@ -1,0 +1,12 @@
+h1,header,footer{
+  font-family: 'Abril Fatface', cursive;
+}
+
+
+footer p{
+  background-color: transparent;
+}
+
+.christmas .background {
+  background-color:rgba(255, 255, 255, 0.5);
+}
