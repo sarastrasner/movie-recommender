@@ -195,7 +195,6 @@ function addRecommendedToData (request, response) {
   const safeValues = [movie_id, image_url, title, description, seasonal_keyword];
   client.query(sql, safeValues)
     .then((results) => {
-      console.log(results)
       response.status(200).redirect('/recommendations');
     }).catch(error =>{
       let str = 'This movie has already been recommended';
