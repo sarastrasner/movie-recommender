@@ -18,8 +18,8 @@
             <a href="https://www.themoviedb.org/movie/<%= movie.movie_id %>?language=en-US"><img src="<%= movie.image_url %>" title="Click Image for more information"></a>
             <h2><%= movie.title %></h2>
             <p><%= movie.description %></p>
-            <button type="button"><a href="/reviews/<%= movie.movie_id %>">Add a Review</a></button>
-              <h2>Reviews</h2>
+            <button type="button" class="reviewButton"><a href="/reviews/<%= movie.movie_id %>">Add a Review</a></button>
+              <h3>Reviews</h3>
               <% movie.reviews.forEach(review => { %>
                 <p id="review">Review: "<%= review.review %>" by <%= review.author %></p>
                 <% }) %>
@@ -27,11 +27,7 @@
             </li>
         <% }) %>
       </ul>
-      <h1>Testing</h1>
-      <button type="button" id="randomMovie" onclick="window.location.href='/random';">Random Movie</button>
-      <button type="button" id="keywordSearch" onclick="window.location.href='/new';">Search by Genre</button>
-      <button type="button" id="recommendations"onclick="window.location.href='/recommendations';">Recommendations</button>
-      <button type="button" id="aboutUs" onclick="window.location.href='/about';">About Us</button>
+      <%- include('partials/nav') -%>
     </main>
     <footer>
       <%- include('partials/footer') -%>

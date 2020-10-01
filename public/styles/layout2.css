@@ -17,22 +17,25 @@ h1{
 
 ul {
   grid-template-rows:2/3;
+  overflow: scroll;
 }
 
 img{
-  max-width: 300px;
+  max-height: 350px;
   margin:auto;
 }
 
 ul > h2{
   font-weight: 900;
   padding: 10px;
+  font-size: 1.5em;
 }
 
 button{
   margin: 10px;
   background-color:#003D57;
   border: none;
+  color:white;
 }
 
 header{
@@ -67,13 +70,14 @@ footer{
   img{
     max-height: 360px;
     float: left;
-    padding: 20px;
+    margin-right: 10px;
   }
 
   ul{
     grid-column: 1/6;
     padding: 0px 15px 0px 15px;
     display: inline-block;
+    overflow: visible;
   }
 
   body{
