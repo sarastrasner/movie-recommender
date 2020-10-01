@@ -101,6 +101,10 @@ footer{
     background-color: #003D57;
   }
 
+  #similar{
+    margin-top:10px;
+  }
+
   button{
     background-color: #003D57;
     height: 30px;
