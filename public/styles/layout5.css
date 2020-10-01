@@ -10,6 +10,10 @@ main{
   display: grid;
 }
 
+div{
+  border-top: 1px solid white;
+}
+
 h1{
   display: none;
 }
@@ -70,11 +74,12 @@ footer{
   }
 
   div{
-    height: 200px;
+    height: 250px;
     width: 900px;
     margin: auto;
     padding: 10px;
     overflow: scroll;
+    border-top: 1px solid white;
   }
 
   #review{
@@ -175,4 +180,10 @@ footer{
     grid-row: 8/9;
   }
   
+  html {
+    overflow-y:scroll;
+  }
+
+  
+
 }

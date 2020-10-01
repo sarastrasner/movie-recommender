@@ -6,28 +6,17 @@
     <link rel="stylesheet" href="/styles/layout4.css">
     <link rel="stylesheet" href="/styles/modules.css">
     <link rel="stylesheet" href="/styles/themes.css">
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Raleway&display=swap" rel="stylesheet">
   </head>
   <body>
-    <header>Genre Search Results</header>
+    <header>Similar Movie Results</header>
     <main>
       <ul>
-        <% genreResults.forEach(movie => { %>
+        <% similarMovies.forEach(movie => { %>
           <li>
-            <div class="background">
+            <div>
               <img src="<%= movie.image_url %>" >
               <h2><%= movie.title %></h2>
               <p><%= movie.description %></p>
-              <form action="/" method="post">
-                <fieldset>
-                  <input type="hidden" name="movie_id" value="<%= movie.movie_id%>">
-                  <input type="hidden" name="image_url" value="<%= movie.image_url %>">
-                  <input type="hidden" name="title" value="<%= movie.title %>">
-                  <input type="hidden" name="description" value="<%= movie.description %>">
-                  <input type="hidden" name="seasonal_keyword" value="<%= movie.seasonal_keyword %>">
-                    <button class="detail_button" type="submit">Add to Recommendations</button>
-                </fieldset>
-              </form>
             </div>
           </li>
             <% }) %>

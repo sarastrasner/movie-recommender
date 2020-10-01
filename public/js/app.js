@@ -16,7 +16,7 @@ function getDate () {
 
 getDate();
 
-currentSeason = 'romcom';
+//currentSeason = 'summer';
 console.log(currentSeason);
 renderSeasonalCSS(currentSeason);
 

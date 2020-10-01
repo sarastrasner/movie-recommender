@@ -22,7 +22,7 @@ app.use(express.static('./public'));
 app.use(express.urlencoded({extended : true}));
 app.use(methodOverride('_method'));
 
-let seasonalKeyword = 9799;
+let seasonalKeyword = 207317;
 getDate();
 
 
@@ -38,6 +38,7 @@ app.get('/recommendations', renderRecommendations);
 app.post('/', addRecommendedToData);
 app.get('/reviews/:id', renderReview);
 app.put('/reviews/:id', addReview);
+app.get('/similar/:id', renderSimilarMovies)
 
 
 
@@ -60,7 +61,7 @@ function getDate () {
     seasonalKeyword = 13088
     break;
   default:
-    seasonalKeyword = 13088
+    seasonalKeyword = 207317
     break;
   }
 }
@@ -180,7 +181,7 @@ function addRecommendedToData (request, response) {
 
 // this function pulls database info in and displays it to the recommendations page
 function renderRecommendations(request, response) {
-  let sql = `SELECT * FROM recommendations`;
+  let sql = `SELECT * FROM recommendations WHERE seasonal_keyword=${seasonalKeyword};`;
   let promise1 = client.query(sql)
 
   let sql2 = `SELECT * FROM reviews;`;
@@ -212,6 +213,25 @@ function addReview(request, response) {
     })
 }
 
+function renderSimilarMovies (request, response) {
+  const id = request.params.id;
+  let url = `https://api.themoviedb.org/3/movie/${id}/recommendations`
+  let queryObject = {
+    api_key: process.env.TMDBAPIKEY,
+    language: 'en-US',
+    page: 1
+  }
+
+  superagent.get(url).query(queryObject)
+    .then(data => {
+      let sample = data.body.results.slice(0, 5);
+      let simMovies = sample.map(movie => new MovieObj(movie, seasonalKeyword));
+      response.status(200).render(`pages/searches/similar`, {similarMovies: simMovies});
+    })
+    .catch(error => console.log(error));
+
+}
+
 
 
 
@@ -222,7 +242,7 @@ function MovieObj(movie, seasonalKeyword) {
   this.movie_id = movie.id;
   this.title = movie.title ? movie.title : 'No Title';
   this.description = movie.overview ? movie.overview : 'Movie description is not available';
-  this.image_url = `https://image.tmdb.org/t/p/w500${movie.poster_path}` ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '/img/no-poster-available.jpeg'; // the beginning part is refering to the hosting site, and the size (w500)
+  this.image_url = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '../../img/no-poster-available.jpg';
   this.seasonal_keyword = seasonalKeyword;
 }
 
