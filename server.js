@@ -22,7 +22,7 @@ app.use(express.static('./public'));
 app.use(express.urlencoded({extended : true}));
 app.use(methodOverride('_method'));
 
-let seasonalKeyword = 207317;
+let seasonalKeyword;
 getDate();
 
 
@@ -48,16 +48,40 @@ function getDate () {
   let d = new Date();
   let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   switch(months[d.getMonth()]) {
-  case 'September' || 'October':
+  case 'September':
     seasonalKeyword = 3335
     break;
-  case 'November' || 'December':
+  case 'October':
+    seasonalKeyword = 3335
+    break;
+  case 'November':
     seasonalKeyword = 207317
     break;
-  case 'January' || 'February' || 'March' || 'April':
+  case 'December':
+    seasonalKeyword = 207317
+    break;
+  case 'January':
     seasonalKeyword = 9799
     break;
-  case 'May' || 'June' || 'July' || 'August':
+  case 'February':
+    seasonalKeyword = 9799
+    break;
+  case 'March':
+    seasonalKeyword = 9799
+    break;
+  case 'April':
+    seasonalKeyword = 9799
+    break;
+  case 'May':
+    seasonalKeyword = 13088
+    break;
+  case 'June':
+    seasonalKeyword = 13088
+    break;
+  case 'July':
+    seasonalKeyword = 13088
+    break;
+  case 'August':
     seasonalKeyword = 13088
     break;
   default:
