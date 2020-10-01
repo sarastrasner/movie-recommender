@@ -5,6 +5,9 @@ body{
   text-align: center;
 }
 
+html {
+  height: 100%;
+}
 
 /* form{
   margin: auto;
@@ -20,6 +23,7 @@ main{
 button{
   margin: 10px;
   background-color: #003D57;
+  color: white;
   border: none;
 }
 
@@ -43,6 +47,8 @@ h1{
 
 footer{
   grid-row: 5/6;
+  position: absolute; 
+  left: 0 ; right: 0; bottom: 0; 
   font-size: 1.2em;
   line-height: 1em;
   margin: 10px;
