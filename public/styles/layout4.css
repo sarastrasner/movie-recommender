@@ -64,6 +64,10 @@ footer{
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+h2{
+  font-size: 1.2em;
+}
+
 @media only screen and (min-width:768px){
 
   section{
@@ -115,6 +119,7 @@ footer{
     height: 100%;
     display: block;
     padding: 0px 5px 0px 5px;
+    margin-right: 10px;
   }
 
   body{

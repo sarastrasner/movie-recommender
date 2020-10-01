@@ -10,3 +10,24 @@ footer p{
 .christmas .background {
   background-color:rgba(255, 255, 255, 0.5);
 }
+
+.halloween img {
+  background-color: white;
+  padding: 2px;
+  border-radius: 2px
+}
+.romcom img{
+  background-color: white;
+  padding: 2px;
+  border-radius: 2px
+}
+.summer img{
+  background-color: #062940;
+  padding: 2px;
+  border-radius: 2px
+}
+.christmas img{
+  background-color: #600000;
+  padding: 2px;
+  border-radius: 2px
+}
