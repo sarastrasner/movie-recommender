@@ -12,7 +12,7 @@
     <header>Your Random Movie</header>
     <main>
       <ul>
-        <a href="https://www.themoviedb.org/movie/<%= randomMovieSelection.movie_id %>?language=en-US"><img src="<%= randomMovieSelection.image_url %>" title="Click Image for more information"></a>
+        <a href="https://www.themoviedb.org/movie/<%= randomMovieSelection.movie_id %>?language=en-US"><img src="<%= randomMovieSelection.image_url %>" title="Click Image for more information on <%= randomMovieSelection.title %>"></a>
         <h2><%= randomMovieSelection.title %></h2>
         <p><%= randomMovieSelection.description %></p>
         <form action="/" method="post">
