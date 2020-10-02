@@ -15,7 +15,7 @@
         <% genreResults.forEach(movie => { %>
           <li>
             <div class="background">
-              <img src="<%= movie.image_url %>" >
+              <a href="https://www.themoviedb.org/movie/<%= movie.movie_id %>?language=en-US"><img src="<%= movie.image_url %>" title="Click Image for more information on <%= movie.title %>"></a>
               <h2><%= movie.title %></h2>
               <p><%= movie.description %></p>
               <form action="/" method="post">
