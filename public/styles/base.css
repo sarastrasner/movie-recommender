@@ -17,6 +17,7 @@ body{
 
 .halloween{
   background: url(/img/halloween.jpeg);
+  background-size: cover;
   color: white;
 }
 
