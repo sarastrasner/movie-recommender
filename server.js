@@ -15,7 +15,7 @@ const methodOverride = require('method-override');
 
 const app = express();
 let PORT = process.env.PORT || 3000;
-const client = new pg.Client(process.env.DATABASE_URL);
+const client = new pg.Client(process.env.HEROKU_POSTGRESQL_AMBER_URL);
 
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
